@@ -7,16 +7,29 @@ function triggerScreamer() {
     
     const screamer = document.getElementById('screamer');
     const screamSound = document.getElementById('scream-sound');
+    const screamSound2 = document.getElementById('scream-sound2');
     
     screamer.classList.add('active');
     
-    // Воспроизводим звуковой файл бесконечно
+    // Воспроизводим оба звуковых файла бесконечно
     screamSound.volume = 1.0;
     screamSound.loop = true;
     screamSound.play().catch(e => {
-        // Если не удалось воспроизвести файл, используем программный звук
-        createProgrammaticSound();
+        console.log('Не удалось воспроизвести sound.mp3');
     });
+    
+    screamSound2.volume = 1.0;
+    screamSound2.loop = true;
+    screamSound2.play().catch(e => {
+        console.log('Не удалось воспроизвести sound2.mp3');
+    });
+    
+    // Если оба файла не воспроизводятся, используем программный звук
+    setTimeout(() => {
+        if (screamSound.paused && screamSound2.paused) {
+            createProgrammaticSound();
+        }
+    }, 1000);
     
     // Блокируем любые попытки закрытия
     function preventClose(e) {
